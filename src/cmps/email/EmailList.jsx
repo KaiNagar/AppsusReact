@@ -1,7 +1,6 @@
 import { EmailPreview } from "./EmailPreview"
 
-export const EmailList = (emails) => {
-    console.log(emails);
+export const EmailList = ({emails}) => {
   return (
     <section className='email-list'>
       {emails.map((email) => (

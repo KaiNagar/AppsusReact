@@ -4,23 +4,17 @@ import { EmailList } from '../../cmps/email/EmailList'
 import { loadEmails } from '../../store/actions/emailActions'
 
 export const _EmailApp = (props) => {
-  const [emails, setEmails] = useState([])
   useEffect( () => {
-    async function loadEmailsToStore(){
-        console.log('first');
-        await props.loadEmails()
-        setEmails(props.emails)
-        console.log(props);
-    }
-    loadEmailsToStore()
+    props.loadEmails()
   }, [])
 
   
-
+const {emails} = props
+if(!emails) return <div>Loading...</div>
   return (
     <section className='email-app'>
       <h1>this is email app</h1>
-      {/* <EmailList emails={emails} /> */}
+      <EmailList emails={emails} />
     </section>
   )
 }
