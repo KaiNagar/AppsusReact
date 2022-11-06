@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { EmailList } from '../../cmps/email/EmailList'
 import { loadEmails } from '../../store/actions/emailActions'
 
@@ -13,7 +14,7 @@ const {emails} = props
 if(!emails) return <div>Loading...</div>
   return (
     <section className='email-app'>
-      <h1>this is email app</h1>
+      <Link to={"/email/compose"}>Compose</Link>
       <EmailList emails={emails} />
     </section>
   )

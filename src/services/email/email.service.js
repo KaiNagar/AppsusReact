@@ -6,6 +6,7 @@ export const emailService = {
     getById,
     remove,
     save,
+    getEmptyEmail
 
 }
 
@@ -47,6 +48,19 @@ function _update(email) {
 
 function filterEmails(){
     console.log('bla');
+}
+
+function getEmptyEmail(){
+    return{
+        id: utilService.makeId(),
+        subject: '',
+        userName: '',
+        body: '',
+        isRead: false,
+        isStarred: false,
+        sentAt: Date.now(),
+        to: '',
+    }
 }
 
 function _createEmails() {
