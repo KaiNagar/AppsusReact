@@ -13,7 +13,14 @@
 
 // views
 // emails
-@import "./5-views/email/emailCompose"
+@import "./5-views/email/emailApp";
+@import "./5-views/email/emailDetails";
+@import "./5-views/email/emailCompose";
 
 // cmps
+
+@import "./4-cmps/appHeader";
+// emails
+@import "./4-cmps/email/emailList";
+@import "./4-cmps/email/emailPreview";
 

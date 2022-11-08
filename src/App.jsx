@@ -14,12 +14,12 @@ export function App() {
       <div className='App container'>
         <AppHeader />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/email' element={<EmailApp />}>
-            <Route path='/email/compose' element={<EmailCompose />} />
+          <Route path='' element={<Home />} />
+          <Route path='login' element={<Login />} />
+          <Route path='email' element={<EmailApp />}>
+            <Route path='compose' element={<EmailCompose />} />
           </Route>
-          <Route path='/email/:emailId' element={<EmailDetails />} />
+          <Route path='email/:emailId' element={<EmailDetails />} />
         </Routes>
       </div>
     </Router>

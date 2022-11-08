@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { EmailList } from '../../cmps/email/EmailList'
 import { loadEmails } from '../../store/actions/emailActions'
 
 export const _EmailApp = (props) => {
-  useEffect( () => {
+    
+  useEffect(() => {
     props.loadEmails()
   }, [])
 
-  
-const {emails} = props
-if(!emails) return <div>Loading...</div>
+  const { emails } = props
+  if (!emails) return <div>Loading...</div>
   return (
     <section className='email-app'>
-      <Link to={"/email/compose"}>Compose</Link>
+      <NavLink replace to={'/email/compose'}>
+        Compose
+      </NavLink>
       <EmailList emails={emails} />
+      <Outlet />
     </section>
   )
 }

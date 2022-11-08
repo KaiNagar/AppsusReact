@@ -6,7 +6,8 @@ export const emailService = {
     getById,
     remove,
     save,
-    getEmptyEmail
+    getEmptyEmail,
+    formattedTime
 
 }
 
@@ -61,6 +62,20 @@ function getEmptyEmail(){
         sentAt: Date.now(),
         to: '',
     }
+}
+
+function formattedTime(timeStamp) {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let now = Date.now()
+    let diff = now - timeStamp
+    let day = 1000 * 60 * 60 * 24
+    let clock = new Date(timeStamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    let date = `${new Date(timeStamp).getDate()} ${monthNames[new Date(timeStamp).getMonth()]}`
+    let year = new Date(timeStamp).getFullYear().toString().slice(-2)
+    if (diff < day) return clock
+    else if (diff < day * 365) return date
+    else if (diff > day * 365) return `${date},${year}`
 }
 
 function _createEmails() {
