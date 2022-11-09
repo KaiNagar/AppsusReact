@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, Outlet } from 'react-router-dom'
 import { EmailList } from '../../cmps/email/EmailList'
+import { EmailSideMenu } from '../../cmps/email/EmailSideMenu'
 import { loadEmails, setFilterBy } from '../../store/actions/emailActions'
 
 export const EmailApp = () => {
@@ -19,12 +20,12 @@ export const EmailApp = () => {
 
   if (!emails) return <div>Loading...</div>
   return (
-    <section className='email-app'>
-      <NavLink replace to={'/email/compose'}>
-        Compose
-      </NavLink>
-      <EmailList emails={emails} />
-      <Outlet />
+    <section className='email-app flex space-between'>
+      <EmailSideMenu />
+      <div className='email-main-content'>
+        <EmailList emails={emails} />
+        <Outlet />
+      </div>
     </section>
   )
 }

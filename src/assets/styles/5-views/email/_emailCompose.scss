@@ -1,7 +1,8 @@
 .email-compose{
-    background-color: green;
-    height: 100px;
     position: absolute;
     bottom: 0;
-    
+    width: 700px;
+    .textarea-compose{
+        resize: none;
+    }    
 }
