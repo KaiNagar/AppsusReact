@@ -1,7 +1,29 @@
 .email-preview{
     display: grid;
     justify-content: space-between;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 4fr 1fr 1fr;
     padding: 0.5rem;
-    border: 1px solid gray;
+    margin: 0.1rem;
+    background-color: white;
+    border-radius:4px ;
+    &:hover{
+        text-decoration: none;
+        background-color: rgb(238, 233, 233);
+    }
+    .email-body,.email-subject{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        font-weight: initial;
+    }
+    .email-time{
+        text-align: right;
+        margin-right: 0.5rem;
+    }
+    .email-username{
+        margin-left: 0.5rem;
+    }
+    .email-labels{
+        text-align: center;
+    }
 }

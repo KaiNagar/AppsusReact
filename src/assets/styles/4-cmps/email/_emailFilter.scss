@@ -1,0 +1,21 @@
+.email-filter{
+    position: absolute;
+    top: -70px;
+    max-width: 600px;
+    width: 100%;
+    .filter-input{
+        padding: rem(18px);
+        padding-inline-start: 2rem;
+        border-radius: rem(4px);
+        border: 1px solid gray;
+        background-color: transparent;
+        transition: 0.4s all;
+        font-size: rem(17px);
+        min-width: 150px;
+        width: 100%;
+        &:focus{
+            outline: none;
+            background-color: white;
+        }
+    }
+}
