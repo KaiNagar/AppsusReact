@@ -1,16 +1,22 @@
 import { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, Outlet } from 'react-router-dom'
 import { EmailList } from '../../cmps/email/EmailList'
-import { loadEmails } from '../../store/actions/emailActions'
+import { loadEmails, setFilterBy } from '../../store/actions/emailActions'
 
-export const _EmailApp = (props) => {
-    
+export const EmailApp = () => {
+  const { emails } = useSelector((state) => state.emailModule)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    props.loadEmails()
+    dispatch(loadEmails())
   }, [])
 
-  const { emails } = props
+  // const onChangeFilter = (filterBy) => {
+  //   dispatch(setFilterBy(filterBy))
+  //   dispatch(loadEmails())
+  // }
+
   if (!emails) return <div>Loading...</div>
   return (
     <section className='email-app'>
@@ -22,15 +28,3 @@ export const _EmailApp = (props) => {
     </section>
   )
 }
-
-const mapStateToProps = (storeState) => {
-  return {
-    emails: storeState.emailModule.emails,
-  }
-}
-
-const mapDispatchToProps = {
-  loadEmails,
-}
-
-export const EmailApp = connect(mapStateToProps, mapDispatchToProps)(_EmailApp)
