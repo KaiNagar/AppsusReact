@@ -1,6 +1,13 @@
 const INITIAL_STATE = {
     emails: null,
-    filterBy: null
+    filterBy: null,
+    criteria:{
+        status:'inbox',
+        txt:'',
+        isRead:false,
+        isStared:false,
+        labels:[]
+    }
 }
 
 
@@ -30,6 +37,11 @@ export function emailReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 filterBy: { ...action.filterBy }
+            }
+        case "SET_CRITERIA":
+            return {
+                ...state,
+                criteria: { ...action.criteria }
             }
 
         default:

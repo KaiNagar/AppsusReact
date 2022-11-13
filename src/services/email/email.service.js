@@ -11,17 +11,22 @@ export const emailService = {
 
 }
 
+const loggedInUser = {
+    email: 'tachoka@services.com',
+    fullName: 'Izuku Midoriya'
+}
+
 const DB_KEY = 'emailDB'
 
-async function query(filterBy = null) {
+async function query(criteria) {
     let emails = await storageService.query(DB_KEY)
-    if (emails && emails.length) return emails
+    if (emails && emails.length) emails = emails
     else {
         emails = _createEmails()
         await storageService.postMany(DB_KEY, (_createEmails()))
     }
-    if (filterBy) emails = filterEmails(filterBy, emails)
-    console.log(emails);
+    emails = setEmailsByCriteria(emails, criteria) // setting emails to be displayed
+    emails = emails.sort((m1, m2) => m2.sentAt - m1.sentAt) //sorting by time sent
     return emails
 }
 
@@ -47,12 +52,19 @@ function _update(email) {
     return storageService.put(DB_KEY, email)
 }
 
-function filterEmails(){
-    console.log('bla');
+function setEmailsByCriteria(emails, criteria) {
+    let emailsToDisplay = []
+    const { status, txt, isRead, isStared, labels } = criteria
+    if (status === 'inbox') emailsToDisplay = emails.filter(m => m.to === loggedInUser.email)
+    if (status === 'sent') emailsToDisplay = emails.filter(m => m.to !== loggedInUser.email)
+
+    if(txt) emailsToDisplay.filter(m=> m.userName.includes(txt))
+    return emailsToDisplay
+
 }
 
-function getEmptyEmail(){
-    return{
+function getEmptyEmail() {
+    return {
         id: utilService.makeId(),
         subject: '',
         userName: '',
@@ -77,9 +89,80 @@ function formattedTime(timeStamp) {
     else if (diff < day * 365) return date
     else if (diff > day * 365) return `${date},${year}`
 }
-
+// karenbigmac822@kmail.com Karen
+// drdan342@kmail.com Dan
+// aayesaa@kmail.com Din
+// nirkpolake@kmail.com Nir
+// FSguy@kmail.com Aviv
 function _createEmails() {
     return [
+        {
+            id: utilService.makeId(),
+            subject: 'Hey keren!',
+            body: 'hey keren thank you for your honest review here at tachokka we try to help every single costumer as much as we can\
+            but we do get here and there some people who fell un supported so if you do fell like this \
+            i can offer you a copun for our store with 99.8% discount for the latest dirt we just brought\
+            if you are intrested let me know please and i wil send it to you right away.\
+            and lat thing please, dont pee on peoples cars in our parking lot or you will be BANNED for life!',
+            isRead: false,
+            isStarred: false,
+            sentAt: 1656443145853,
+            from: 'tachoka@services.com',
+            userName: 'Tachoka'
+        },
+        {
+            id: utilService.makeId(),
+            subject: 'Hey there Dan',
+            body: 'thank you for reaching out to us and letting us know about the situation we 100% understand you and want to help you as much as we can\
+            so pleae let us know how we can do that\
+            for now there is a free dirt bag waiting for you in the local store + a gift card for car wash named \"Dani Danchu Detailing\"\
+            he is very good trust me!\
+            have a great day!',
+            isRead: false,
+            isStarred: true,
+            sentAt: 1656443137853,
+            from: 'tachoka@services.com',
+            userName: 'Tachoka'
+        },
+        {
+            id: utilService.makeId(),
+            subject: 'Hi Din..',
+            body: 'We are not quite sure what you do with your dirt and we cant refund you or replace any kind of dirt with out\
+            checking the old dirt before, also when you say that we wont like to take the old dirt we think its better for you to have it for now\
+            and come to the store for further discussions....\
+            i must repeat DO NOT BRING THE OLD DIRT WITH YOU!',
+            isRead: false,
+            isStarred: false,
+            sentAt: 1656442147853,
+            from: 'tachoka@services.com',
+            userName: 'Tachoka'
+        },
+        {
+            id: utilService.makeId(),
+            subject: 'Nir!! our favorite customer',
+            body: 'once again we are very happy to her your dirt stories!!\
+            it makes everyone here so happy, and you are very welcomed here when ever you want\
+            in the name of all our employees we have a spacial surprise for you in the local store so make sure to \
+            come pick it up ASAP also you might want to bring your dogs with you ;)',
+            isRead: false,
+            isStarred: true,
+            sentAt: 1656443077853,
+            from: 'tachoka@services.com',
+            userName: 'Tachoka'
+        },
+        {
+            id: utilService.makeId(),
+            subject: 'Hey guy the fullstack developer',
+            body: 'thank you for your review about our website Guy we really like what you want to do with our website\
+            but you prices are a bit too high for as right now is there any chance to talk about it?\
+            we can also pay with dirt if you want, our dirt is the best dirt you can find out there and that is a 100% guarantee\
+            please update us on how to move forward',
+            isRead: false,
+            isStarred: true,
+            sentAt: 1656443057853,
+            from: 'tachoka@services.com',
+            userName: 'Tachoka'
+        },
         {
             _id: utilService.makeId(),
             subject: 'Some guy cut me off in line!!!',
@@ -90,7 +173,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: Date.now(),
-            from: 'karenbigmac822@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Karen',
             labels: ['Critical', 'Work']
         },
@@ -105,7 +188,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: Date.now() - 10000,
-            from: 'drdan342@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Dan',
             labels: ['Work', 'Spam']
         },
@@ -119,7 +202,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: Date.now() - (1000 * 60),
-            from: 'aayesaa@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Din',
             labels: ['Family', 'Memories']
         },
@@ -133,7 +216,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: Date.now() - (1000 * 60 * 6),
-            from: 'nirkpolake@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Nir',
             labels: ['Romantic', 'Family']
         },
@@ -146,7 +229,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'FSguy@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Aviv',
             labels: ['Work', 'Spam']
 
@@ -161,7 +244,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: 1656446147853,
-            from: 'karenbigmac822@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Karen',
             labels: ['Romantic', 'Family']
 
@@ -177,7 +260,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: 1656492967853,
-            from: 'drdan342@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Dan',
             labels: ['Work', 'Spam']
 
@@ -192,7 +275,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: Date.now() - (1000 * 60 * 6 * 20),
-            from: 'aayesaa@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Din',
             labels: ['Work', 'Spam']
 
@@ -207,7 +290,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'nirkpolake@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Nir',
             labels: ['Friends', 'Family']
 
@@ -221,7 +304,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'FSguy@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Aviv',
             labels: ['Critical', 'Work']
 
@@ -236,7 +319,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: 1656446147853,
-            from: 'karenbigmac822@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Karen',
             labels: ['Critical', 'Work']
 
@@ -252,7 +335,7 @@ function _createEmails() {
             isRead: false,
             isStarred: true,
             sentAt: 1656492967853,
-            from: 'drdan342@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Dan',
             labels: ['Romantic', 'Family']
 
@@ -267,7 +350,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1656304967853,
-            from: 'aayesaa@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Din',
             labels: ['Critical', 'Work']
 
@@ -282,7 +365,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'nirkpolake@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Nir',
             labels: ['Critical', 'Work']
 
@@ -296,7 +379,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'FSguy@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Aviv',
             labels: ['Romantic', 'Family']
 
@@ -311,7 +394,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'nirkpolake@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Nir',
             labels: ['Critical', 'Work']
 
@@ -325,7 +408,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'FSguy@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Aviv',
             labels: ['Critical', 'Work']
 
@@ -340,7 +423,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'nirkpolake@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Nir',
             labels: ['Romantic', 'Family']
 
@@ -354,7 +437,7 @@ function _createEmails() {
             isRead: false,
             isStarred: false,
             sentAt: 1245402967853,
-            from: 'FSguy@kmail.com',
+            to: 'tachoka@services.com',
             userName: 'Aviv',
             labels: ['Work', 'Spam']
 

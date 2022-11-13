@@ -3,26 +3,31 @@ import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, Outlet } from 'react-router-dom'
 import { EmailFilter } from '../../cmps/email/EmailFilter'
 import { EmailList } from '../../cmps/email/EmailList'
-import { EmailSideMenu } from '../../cmps/email/EmailSideMenu'
-import { loadEmails, setFilterBy } from '../../store/actions/emailActions'
+import { EmailFolderList } from '../../cmps/email/EmailFolderList'
+import { loadEmails, setCriteria, setFilterBy } from '../../store/actions/emailActions'
 
 export const EmailApp = () => {
-  const { emails } = useSelector((state) => state.emailModule)
+  const { emails,criteria } = useSelector((state) => state.emailModule)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadEmails())
-  }, [])
+  }, [criteria])
 
   // const onChangeFilter = (filterBy) => {
   //   dispatch(setFilterBy(filterBy))
   //   dispatch(loadEmails())
   // }
 
+  const onChangeStatus = (status) => {
+    criteria.status = status
+    dispatch(setCriteria(criteria))
+  }
+
   if (!emails) return <div>Loading...</div>
   return (
     <section className='email-app flex space-between'>
-      <EmailSideMenu />
+      <EmailFolderList onChangeStatus={onChangeStatus} />
       <div className='email-main-content'>
         <EmailFilter />
         <EmailList emails={emails} />

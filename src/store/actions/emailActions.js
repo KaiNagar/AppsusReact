@@ -2,8 +2,8 @@ import { emailService } from "../../services/email/email.service"
 export function loadEmails() {
     return async (dispatch, getState) => {
         try {
-            const { filterBy } = getState().emailModule
-            const emails = await emailService.query(filterBy)
+            const { criteria } = getState().emailModule
+            const emails = await emailService.query(criteria)
             dispatch({ type: 'LOAD_MEALS', emails })
         } catch (err) {
             console.error('err', err);
@@ -48,5 +48,10 @@ export function removeEmail(emailId) {
 export function setFilterBy(filterBy) {
     return (dispatch) => {
         dispatch({ type: 'SET_FILTER_BY', filterBy })
+    }
+}
+export function setCriteria(criteria) {
+    return (dispatch) => {
+        dispatch({ type: 'SET_CRITERIA', criteria })
     }
 }
