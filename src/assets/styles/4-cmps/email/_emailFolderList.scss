@@ -1,0 +1,26 @@
+.email-folder-list {
+  margin: 1rem;
+  margin-right: 4rem;
+  font-size: 1rem;
+  .tab {
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .compose-btn {
+    background-color: rgb(201, 218, 241);
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    .edit-img {
+      width: 1rem;
+      margin: 0 0.5rem 0 0;
+    }
+    &:hover {
+      text-decoration: none;
+      box-shadow: 2px 2px 5px 0px rgb(86, 97, 100);
+    }
+  }
+  img {
+    width: 100%;
+  }
+}

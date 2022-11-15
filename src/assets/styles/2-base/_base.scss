@@ -6,6 +6,7 @@ html {
   // font-family: OpenSans, sans-serif;
   font-size: 16px;
   scroll-behavior: smooth;
+  background-color: rgb(228, 239, 243);
 }
 
 body {
@@ -17,7 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.active{
+.active {
   opacity: 0.6;
 }
 
@@ -26,8 +27,6 @@ body {
   main {
     flex-grow: 1;
   }
-  
-  background-color: rgb(228, 239, 243);
 }
 
 img {
