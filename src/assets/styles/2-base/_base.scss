@@ -6,7 +6,7 @@ html {
   // font-family: OpenSans, sans-serif;
   font-size: 16px;
   scroll-behavior: smooth;
-  background-color: rgb(228, 239, 243);
+  background-color: #f6f8fc;
 }
 
 body {
@@ -20,6 +20,13 @@ body {
 
 .active {
   opacity: 0.6;
+}
+.bold{
+  font-weight: bold;
+  background-color: white;
+}
+.is-read{
+  background-color: lightgray;
 }
 
 .App {

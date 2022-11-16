@@ -1,10 +1,14 @@
 .email-folder-list {
-  margin: 1rem;
   margin-right: 4rem;
   font-size: 1rem;
   .tab {
     cursor: pointer;
     padding: 0.5rem;
+    padding-left: 1rem;
+    
+  }
+  .tab.active{
+    background-color: lightblue;
   }
   .compose-btn {
     background-color: rgb(201, 218, 241);

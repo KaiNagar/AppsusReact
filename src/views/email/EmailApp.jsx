@@ -4,15 +4,24 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { EmailFilter } from '../../cmps/email/EmailFilter'
 import { EmailList } from '../../cmps/email/EmailList'
 import { EmailFolderList } from '../../cmps/email/EmailFolderList'
-import { loadEmails, setCriteria, setFilterBy } from '../../store/actions/emailActions'
+import {
+  loadEmails,
+  setCriteria,
+  setFilterBy,
+  updateEmail,
+} from '../../store/actions/emailActions'
 
 export const EmailApp = () => {
-  const { emails,criteria } = useSelector((state) => state.emailModule)
+  const { emails, criteria } = useSelector((state) => state.emailModule)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadEmails())
   }, [criteria])
+
+  const onUpdateEmail = (email) => {
+    dispatch(updateEmail(email))
+  }
 
   // const onChangeFilter = (filterBy) => {
   //   dispatch(setFilterBy(filterBy))
@@ -30,7 +39,7 @@ export const EmailApp = () => {
       <EmailFolderList onChangeStatus={onChangeStatus} />
       <div className='email-main-content'>
         <EmailFilter />
-        <EmailList emails={emails} />
+        <EmailList emails={emails} onUpdateEmail={onUpdateEmail} />
         <Outlet />
       </div>
     </section>

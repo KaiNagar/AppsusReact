@@ -26,7 +26,7 @@ export function emailReducer(state = INITIAL_STATE, action) {
         case "UPDATE_MEAL":
             return {
                 ...state,
-                emails: state.contacts.map(m => m._id === action.email._id ? action.email : m)
+                emails: state.emails.map(m => m._id === action.email._id ? action.email : m)
             }
         case "REMOVE_MEAL":
             return {
